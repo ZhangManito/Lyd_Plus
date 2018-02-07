@@ -25,14 +25,29 @@ public class MainActivity extends BaseActivity {
     int startTabPotison = -1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+    protected void initView() {
+        activityMainBinding= (ActivityMainBinding) getDataBinding();
+        initTab();
     }
 
     @Override
-    protected void initView() {
-        initTab();
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void setEvent() {
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     /**
@@ -43,6 +58,7 @@ public class MainActivity extends BaseActivity {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
         }
         activityMainBinding.tabLayout.setTabData(mTabEntities);
+        activityMainBinding.tabLayout.bringToFront();
         ImageView iconView = activityMainBinding.tabLayout.getIconView(0);
         iconView.setScaleX(2f * iconView.getScaleX());
         iconView.setScaleY(2f * iconView.getScaleY());
