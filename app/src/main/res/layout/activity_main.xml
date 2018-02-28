@@ -2,17 +2,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:orientation="vertical">
-        <com.lingyongdai.finance.custom.MyViewPager
-            android:id="@+id/view_pager"
+
+        <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:background="@color/grey6">
+            <!--自定义控件-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clock" />
+        </android.support.v7.widget.Toolbar>
         <com.flyco.tablayout.CommonTabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
@@ -32,10 +37,15 @@
             tl:tl_textsize="11sp"
             tl:tl_underline_height="0dp" />
         <View
+            android:id="@+id/view_cut_off_rule"
             android:layout_width="match_parent"
             android:layout_height="0.2dp"
             android:layout_above="@id/tab_layout"
             android:background="#D9D9D9" />
-
+        <com.lingyongdai.finance.custom.MyViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/view_cut_off_rule"/>
     </RelativeLayout>
 </layout>

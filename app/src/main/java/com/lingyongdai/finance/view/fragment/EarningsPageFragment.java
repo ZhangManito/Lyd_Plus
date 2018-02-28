@@ -2,7 +2,10 @@ package com.lingyongdai.finance.view.fragment;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
+
 import com.lingyongdai.finance.R;
 import com.lingyongdai.finance.base.BaseFragment;
 import com.lingyongdai.finance.databinding.FragmentEarningsPageBinding;
@@ -26,11 +29,14 @@ public class EarningsPageFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
-        FragmentEarningsPageBinding pageBinding= (FragmentEarningsPageBinding) getDataBinding();
+    protected void initView(Bundle savedInstanceState) {
+        FragmentEarningsPageBinding pageBinding= getDataBinding();
+        pageBinding.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), WelcomeActivity.class));
+            }
+        });
     }
 
-    public void clickBtn() {
-        startActivity(new Intent(getActivity(), WelcomeActivity.class));
-    }
 }

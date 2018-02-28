@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lingyongdai.finance.R;
+import com.lingyongdai.finance.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ServicePageFragment extends Fragment {
+public class ServicePageFragment extends BaseFragment {
 
 
     public ServicePageFragment() {
@@ -21,10 +22,13 @@ public class ServicePageFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_service_page, container, false);
+    protected int getLayoutId() {
+        return R.layout.fragment_service_page;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
     }
 
 }

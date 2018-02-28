@@ -1,17 +1,26 @@
-package com.lingyongdai.finance;
+package com.lingyongdai.finance.view;
 
 import android.databinding.DataBindingUtil;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.lingyongdai.finance.R;
+import com.lingyongdai.finance.adapter.MyViewPaerAdapter;
 import com.lingyongdai.finance.base.BaseActivity;
 import com.lingyongdai.finance.bean.TabEntity;
 import com.lingyongdai.finance.databinding.ActivityMainBinding;
+import com.lingyongdai.finance.view.fragment.EarningsPageFragment;
+import com.lingyongdai.finance.view.fragment.HomePageFragment;
+import com.lingyongdai.finance.view.fragment.MyInfoPageFragment;
+import com.lingyongdai.finance.view.fragment.ServicePageFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private String[] mTitles = {"首页", "收益", "服务", "我的"};
@@ -21,23 +30,21 @@ public class MainActivity extends BaseActivity {
             R.mipmap.main_licai_icon, R.mipmap.main_shouyi_icon, R.mipmap.main_fuwu_icon, R.mipmap.main_myac_icon};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private ActivityMainBinding activityMainBinding;
+    private List<Fragment> fragmentList=new ArrayList<>();
     //判断上一个tab是否变大
     int startTabPotison = -1;
 
     @Override
-    protected void initView() {
-        activityMainBinding= (ActivityMainBinding) getDataBinding();
+    protected void initView(Bundle savedInstanceState) {
+        activityMainBinding= getDataBinding();
+        fragmentList.add(new HomePageFragment());
+        fragmentList.add(new EarningsPageFragment());
+        fragmentList.add(new ServicePageFragment());
+        fragmentList.add(new MyInfoPageFragment());
+        //viewpager缓存页面+当前页面
+        activityMainBinding.viewPager.setOffscreenPageLimit(3);
+        activityMainBinding.viewPager.setAdapter(new MyViewPaerAdapter(getSupportFragmentManager(), Arrays.asList(mTitles),fragmentList));
         initTab();
-    }
-
-    @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    protected void setEvent() {
-
     }
 
     @Override
@@ -66,6 +73,9 @@ public class MainActivity extends BaseActivity {
         activityMainBinding.tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
+                //捆绑viewpager显示
+                activityMainBinding.viewPager.setCurrentItem(position);
+                //tab变大变小效果
                 if (startTabPotison==-1&&position==0){
                     return;
                 }else if (startTabPotison==-1){

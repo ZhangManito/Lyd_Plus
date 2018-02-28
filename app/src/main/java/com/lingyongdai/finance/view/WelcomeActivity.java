@@ -3,11 +3,19 @@ package com.lingyongdai.finance.view;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class WelcomeActivity extends AppCompatActivity {
+import com.lingyongdai.finance.R;
+import com.lingyongdai.finance.base.BaseActivity;
+
+public class WelcomeActivity extends BaseActivity {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+    protected int getLayoutId() {
+        return R.layout.activity_welcome;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
     }
 }

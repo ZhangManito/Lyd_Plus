@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.lingyongdai.finance.manager.ActivityStackManager;
 import com.lingyongdai.finance.manager.ScreenManager;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.ref.WeakReference;
 
@@ -20,7 +21,7 @@ import java.lang.ref.WeakReference;
  * Created by guoliang on 2018/2/5.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
     private static final String TAG = "BaseActivity";
     private ViewDataBinding mViewDataBinding;
     private WeakReference<Activity> activity;
@@ -42,22 +43,13 @@ public abstract class BaseActivity extends AppCompatActivity {
      **/
     private boolean isDebug;
 
+    protected abstract int getLayoutId();
+
+
     /**
      * 初始化界面
      **/
-    protected abstract void initView();
-
-    /**
-     * 初始化数据
-     */
-    protected abstract void initData();
-
-    /**
-     * 绑定事件
-     */
-    protected abstract void setEvent();
-
-    protected abstract int getLayoutId();
+    protected abstract void initView(Bundle savedInstanceState);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,17 +57,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         Log.i(TAG, "--->onCreate()");
         activity = new WeakReference<Activity>(this);
         ActivityStackManager.getInstance().addActivity(activity);
-        mViewDataBinding = getDataBinding();
-        initView();
-        initData();
-        setEvent();
+        mViewDataBinding = DataBindingUtil.setContentView(this,getLayoutId());
+        initView(savedInstanceState);
         ScreenManager screenManager = ScreenManager.getInstance();
 //        screenManager.setStatusBar(isStatusBar, this);
 //        screenManager.setScreenRoate(isScreenRoate, this);
 //        screenManager.setFullScreen(isFullScreen, this);
     }
-    protected ViewDataBinding getDataBinding() {
-        return DataBindingUtil.setContentView(this, getLayoutId());
+
+    /**
+     * 获取ViewDataBinding
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends ViewDataBinding>T getDataBinding(){
+        return (T)mViewDataBinding;
     }
     /**
      * 跳转Activity
