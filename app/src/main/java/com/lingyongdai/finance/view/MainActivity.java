@@ -1,13 +1,12 @@
 package com.lingyongdai.finance.view;
 
-import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.gyf.barlibrary.ImmersionBar;
 import com.lingyongdai.finance.R;
 import com.lingyongdai.finance.adapter.MyViewPaerAdapter;
 import com.lingyongdai.finance.base.BaseActivity;
@@ -36,6 +35,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        //全面屏
+//        ImmersionBar.with(this).init();
         activityMainBinding= getDataBinding();
         fragmentList.add(new HomePageFragment());
         fragmentList.add(new EarningsPageFragment());
