@@ -7,7 +7,11 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.gyf.barlibrary.ImmersionBar;
+import com.lingyongdai.finance.R;
 import com.lingyongdai.finance.manager.ActivityStackManager;
+import com.lingyongdai.finance.utils.StatusBarUtil;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.ref.WeakReference;
@@ -41,7 +45,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         activity = new WeakReference<Activity>(this);
         ActivityStackManager.getInstance().addActivity(activity);
         mViewDataBinding = DataBindingUtil.setContentView(this,getLayoutId());
-        setStatusBar();
+//        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorAccent));
+        StatusBarUtil.setTranslucent(this,50);
         initView(savedInstanceState);
     }
 
@@ -74,13 +79,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      */
     public void exitLogic() {
         ActivityStackManager.getInstance().AppExit(this);//remove all activity.
-    }
-
-    /**
-     * 状态栏设置
-     */
-    public void setStatusBar(){
-
     }
 
     @Override

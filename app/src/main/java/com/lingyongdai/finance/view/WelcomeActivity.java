@@ -19,9 +19,6 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);// 隐藏标题
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
         super.onCreate(savedInstanceState);
     }
 
@@ -45,8 +42,4 @@ public class WelcomeActivity extends BaseActivity {
                 });
     }
 
-    @Override
-    public void setStatusBar() {
-
-    }
 }
