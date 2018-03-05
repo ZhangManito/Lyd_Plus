@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="splash_image">
+        <item>@mipmap/nv1</item>
+        <item>@mipmap/nv2</item>
+        <item>@mipmap/nv3</item>
+        <item>@mipmap/nv4</item>
+    </integer-array>
+</resources>

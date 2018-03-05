@@ -1,6 +1,9 @@
 package com.lingyongdai.finance.api;
 
 
+import com.lingyongdai.finance.base.BaseSubscriber;
+import com.lingyongdai.finance.bean.BaseEntity;
+import com.lingyongdai.finance.bean.PlatformData;
 import com.lingyongdai.finance.manager.ActivityStackManager;
 import com.lingyongdai.finance.utils.NetworkUtil;
 import com.lingyongdai.finance.utils.UrlUtils;
@@ -9,6 +12,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -26,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpManager {
 
     private final Retrofit retrofit;
-
+    private ContentService contentService;
     private HttpManager() {
         //缓存文件夹
         File cacheFile = new File(ActivityStackManager.getInstance().getTopActivity().getCacheDir().getAbsolutePath() + File.separator + "data", "NetCache");
@@ -73,5 +80,32 @@ public class HttpManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(UrlUtils.FINANCE_URL)
                 .build();
+
+        contentService = retrofit.create(ContentService.class);
     }
+    //在访问HttpMethods时创建单例
+    private static class SingletonHolder {
+        private static final HttpManager INSTANCE = new HttpManager();
+    }
+    //获取单例
+    public static HttpManager getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+    private <T> void toSubscribe(Observable<T> o, Observer<T> s) {
+        o.subscribeOn(Schedulers.io())//被观察线程
+                //取消订阅线程
+                .unsubscribeOn(Schedulers.io())
+                //观察者线程
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s);
+    }
+    /**
+     * 获取理财页累计投资金额
+     **/
+    public void getAllAmountMonth(BaseSubscriber<BaseEntity<PlatformData>> subscriber, String appKey, long timestamp, String sign, String deviceId, String token) {
+
+        Observable observable = contentService.getAllAmountApi(appKey, timestamp, sign, deviceId, token);
+        toSubscribe(observable, subscriber);
+    }
+
 }

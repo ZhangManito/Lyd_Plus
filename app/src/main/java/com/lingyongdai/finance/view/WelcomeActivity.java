@@ -1,6 +1,7 @@
 package com.lingyongdai.finance.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Window;
@@ -30,13 +31,18 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
+        SharedPreferences setting = getSharedPreferences("SHARE_APP_TAG", 0);
+        final Boolean user_first = setting.getBoolean("FirstOpen",true);
         Observable.timer(3, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+                        if (user_first){
+                            startActivity(new Intent(WelcomeActivity.this, BootPageActivity.class));
+                        }else {
+                            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                        }
                         finish();
                     }
                 });

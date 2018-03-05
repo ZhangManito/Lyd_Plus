@@ -1,9 +1,11 @@
 package com.lingyongdai.finance.view;
 
+import android.databinding.BindingAdapter;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.lingyongdai.finance.R;
@@ -99,5 +101,10 @@ public class MainActivity extends BaseActivity {
             public void onTabReselect(int position) {
             }
         });
+    }
+
+    @BindingAdapter({"imageUrl"})
+    public static void imageLoader(ImageView imageView,String url){
+        Glide.with(imageView.getContext()).load(url).into(imageView);
     }
 }
