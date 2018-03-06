@@ -4,9 +4,9 @@ import android.app.Activity;
 
 import com.lingyongdai.finance.api.HttpManager;
 import com.lingyongdai.finance.base.BaseSubscriber;
-import com.lingyongdai.finance.bean.BaseEntity;
 import com.lingyongdai.finance.bean.PlatformData;
 import com.lingyongdai.finance.databinding.ActivityMainBinding;
+import com.lingyongdai.finance.dialog.MainZhuCeDialog;
 
 import io.reactivex.disposables.Disposable;
 
@@ -15,17 +15,31 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class MActivityViewModel {
-    public MActivityViewModel(Activity activity, ActivityMainBinding mainBinding) {
-        HttpManager.getInstance().getAllAmountMonth(new BaseSubscriber<BaseEntity<PlatformData>>(){
+
+
+    public MActivityViewModel(final Activity activity, ActivityMainBinding mainBinding) {
+        HttpManager.getInstance().getAllAmountMonth(new BaseSubscriber<PlatformData>() {
+
             @Override
             public void onSubscribe(Disposable d) {
                 super.onSubscribe(d);
             }
 
             @Override
-            public void onNext(BaseEntity<BaseEntity<PlatformData>> baseEntityBaseEntity) {
-                super.onNext(baseEntityBaseEntity);
+            public void onNext(PlatformData platformData) {
+                super.onNext(platformData);
+                MainZhuCeDialog mainZhuCeDialog=new MainZhuCeDialog(activity, platformData.getImgMain(), platformData.getImgVice(), new MainZhuCeDialog.MyDialogListener() {
+                    @Override
+                    public void quxiaoListener() {
 
+                    }
+
+                    @Override
+                    public void sureListener() {
+
+                    }
+                });
+                mainZhuCeDialog.show();
             }
 
             @Override
@@ -37,6 +51,7 @@ public class MActivityViewModel {
             public void onComplete() {
                 super.onComplete();
             }
-        },"AndroidAppKey",0,"","","");
+        }, "AndroidAppKey", 0, "", "", "");
     }
+
 }

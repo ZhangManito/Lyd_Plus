@@ -3,22 +3,10 @@ package com.lingyongdai.finance.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
 import com.lingyongdai.finance.R;
 import com.lingyongdai.finance.base.BaseFragment;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.lingyongdai.finance.viewmodel.fragment.HomePageViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +28,7 @@ public class HomePageFragment extends BaseFragment {
     @Override
     protected void initView(Bundle savedInstanceState) {
 
-
+        HomePageViewModel homePageViewModel=new HomePageViewModel(getActivity());
 //        Observable.create(new ObservableOnSubscribe<Response>() {
 //            @Override
 //            public void subscribe(ObservableEmitter<Response> emitter) throws Exception {

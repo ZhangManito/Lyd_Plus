@@ -1,5 +1,6 @@
 package com.lingyongdai.finance.base;
 
+import com.google.gson.Gson;
 import com.lingyongdai.finance.bean.BaseEntity;
 import com.lingyongdai.finance.utils.NetworkUtil;
 
@@ -10,7 +11,10 @@ import io.reactivex.disposables.Disposable;
  * Created by guoliang on 2018/3/3.
  */
 
-public class BaseSubscriber<T> implements Observer<BaseEntity<T>> {
+public class BaseSubscriber<T> implements Observer<T> {
+
+    private String stringjson;
+
     @Override
     public void onSubscribe(Disposable d) {
         if (!NetworkUtil.isNetworkConnected()){
@@ -20,8 +24,8 @@ public class BaseSubscriber<T> implements Observer<BaseEntity<T>> {
     }
 
     @Override
-    public void onNext(BaseEntity<T> tBaseEntity) {
-
+    public void onNext(T t) {
+        stringjson = new Gson().toJson(t);
     }
 
     @Override

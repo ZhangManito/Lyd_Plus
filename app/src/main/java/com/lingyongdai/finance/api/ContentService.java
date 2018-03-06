@@ -13,6 +13,6 @@ import retrofit2.http.Query;
 
 public interface ContentService {
     @POST("/home/getIndexResponseLyd")
-    Observable<BaseEntity<PlatformData>> getAllAmountApi(@Query("appKey") String appKey, @Query("timestamp") long timestamp, @Query("sign") String sign,
+    Observable<PlatformData> getAllAmountApi(@Query("appKey") String appKey, @Query("timestamp") long timestamp, @Query("sign") String sign,
                                            @Query("deviceId") String deviceId, @Query("token") String token);
 }

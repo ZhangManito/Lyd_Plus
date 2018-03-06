@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-        <variable
-            name="pd"
-            type="com.lingyongdai.finance.bean.PlatformData"/>
-    </data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myDialog_View"
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/myDialog_View"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingRight="20dp">
-                <ImageView
-                    android:id="@+id/btn_close"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="end"
-                    app:imageUrl="@{pd.imgVice}"/>
-
-            </LinearLayout>
+            android:orientation="vertical"
+            android:paddingRight="20dp">
 
             <ImageView
-                android:id="@+id/btn_receive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:imageUrl="@{pd.imgMain}"/>
+                android:id="@+id/toreg_close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end" />
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/toreg_lingqu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
-</layout>
+
+
+</LinearLayout>

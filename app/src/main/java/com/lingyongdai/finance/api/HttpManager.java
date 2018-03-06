@@ -102,7 +102,7 @@ public class HttpManager {
     /**
      * 获取理财页累计投资金额
      **/
-    public void getAllAmountMonth(BaseSubscriber<BaseEntity<PlatformData>> subscriber, String appKey, long timestamp, String sign, String deviceId, String token) {
+    public void getAllAmountMonth(BaseSubscriber<PlatformData> subscriber, String appKey, long timestamp, String sign, String deviceId, String token) {
 
         Observable observable = contentService.getAllAmountApi(appKey, timestamp, sign, deviceId, token);
         toSubscribe(observable, subscriber);
