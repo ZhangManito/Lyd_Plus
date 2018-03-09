@@ -7,7 +7,13 @@ import com.lingyongdai.finance.base.BaseSubscriber;
 import com.lingyongdai.finance.bean.PlatformData;
 import com.lingyongdai.finance.databinding.ActivityMainBinding;
 import com.lingyongdai.finance.dialog.MainZhuCeDialog;
+import com.lingyongdai.finance.view.MainActivity;
 
+import javax.inject.Inject;
+
+import dagger.Component;
+import dagger.Module;
+import dagger.Provides;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -16,8 +22,8 @@ import io.reactivex.disposables.Disposable;
 
 public class MActivityViewModel {
 
-
-    public MActivityViewModel(final Activity activity, ActivityMainBinding mainBinding) {
+    @Inject
+    MActivityViewModel(final Activity activity, ActivityMainBinding mainBinding) {
         HttpManager.getInstance().getAllAmountMonth(new BaseSubscriber<PlatformData>() {
 
             @Override
@@ -29,18 +35,18 @@ public class MActivityViewModel {
             public void onNext(PlatformData platformData) {
                 super.onNext(platformData);
                 MainZhuCeDialog mainZhuCeDialog=new MainZhuCeDialog(activity, platformData.getImgMain(), platformData.getImgVice(), new MainZhuCeDialog.MyDialogListener() {
-                    @Override
-                    public void quxiaoListener() {
+                @Override
+                public void quxiaoListener() {
 
-                    }
+                }
 
-                    @Override
-                    public void sureListener() {
+                @Override
+                public void sureListener() {
 
-                    }
-                });
+                }
+            });
                 mainZhuCeDialog.show();
-            }
+        }
 
             @Override
             public void onError(Throwable e) {
@@ -54,4 +60,27 @@ public class MActivityViewModel {
         }, "AndroidAppKey", 0, "", "", "");
     }
 
+    @Module
+    public static class MainModule{
+        private final Activity activity;
+        private final ActivityMainBinding mainBinding;
+
+        public MainModule(Activity activity, ActivityMainBinding mainBinding) {
+            this.activity = activity;
+            this.mainBinding = mainBinding;
+        }
+        @Provides
+        Activity provideActivity(){
+            return activity;
+        }
+        @Provides
+        ActivityMainBinding provideActivityMainBinding(){
+            return mainBinding;
+        }
+    }
+
+    @Component(modules = MainModule.class)
+    public interface MainComponent {
+        void inject(MainActivity activity);
+    }
 }
